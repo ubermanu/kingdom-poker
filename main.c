@@ -7,6 +7,7 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_image.h>
+#include <SDL/SDL_mixer.h>
 // #include <SDL/SDL_rotozoom.h>
 // #include <fmod.h>
 
@@ -34,8 +35,8 @@ int Deck[52] = {0};
 SDL_Rect sprToken[5] = {0,0}, sprHeads[24] = {0,0}, sprNumbers[18] = {0,0}, sprColor[4] = {0,0}, sprDeck[2] = {0,0}, sprMenu[4] = {0,0}, sprMisc[6] = {0,0};
 TTF_Font *fntList[3] = {NULL};
 
-// FSOUND_SAMPLE *sndCard = NULL, *sndToken = NULL, *sndCoin = NULL;
-// FSOUND_STREAM *music = NULL, *noise = NULL;
+Mix_Chunk *sndCard = NULL, *sndToken = NULL, *sndCoin = NULL;
+Mix_Music *music = NULL, *noise = NULL;
 
 FILE * savFile;
 
@@ -161,13 +162,13 @@ void CheckEvent()
 						if (game_stop == 1)
 						{
 							game_stop = 0;
-							// FSOUND_SetPaused(FSOUND_ALL, 0);
+							Mix_PauseMusic();
 						}
 						else
 						{
 							objCursor.drag = -1;
 							game_stop = 1;
-							// FSOUND_SetPaused(FSOUND_ALL, 1);
+							Mix_ResumeMusic();
 						}
 					}
 					break;
@@ -282,7 +283,7 @@ void CheckEvent()
                                     pot = 0;
                                     for (i = 5; i < cntToken; i++) pot += objToken[i].value;
                                     bank -= pot;
-                                    // if (FSOUND_GetPaused(1) != true) FSOUND_PlaySound(FSOUND_FREE, sndToken);
+                                    if (Mix_PausedMusic() != 1) Mix_PlayChannel(-1, sndToken, 0);
                                 }
                                 if (MouseOnDeck() == true && objCursor.drag == -1 && pot > 0)
                                 {
@@ -303,7 +304,7 @@ void CheckEvent()
                                             {
                                                 objCard[i].select *= -1;
                                                 objCard[i].y += objCard[i].select * 20;
-                                                // if (FSOUND_GetPaused(1) != true) FSOUND_PlaySound(FSOUND_FREE, sndCard);
+                                                if (Mix_PausedMusic() != 1) Mix_PlayChannel(-1, sndCard, 0);
                                             }
                                         }
                                         break;
@@ -313,7 +314,7 @@ void CheckEvent()
                                             {
                                                 objCard[i].select = -1;
                                                 objCard[i].y += objCard[i].select * 20;
-                                                // if (FSOUND_GetPaused(1) != true) FSOUND_PlaySound(FSOUND_FREE, sndCard);
+                                                if (Mix_PausedMusic() != 1) Mix_PlayChannel(-1, sndCard, 0);
                                             }
                                             objCard[i].select = -1;
                                         }
@@ -324,7 +325,7 @@ void CheckEvent()
                                             {
                                                 objCard[i].select = 1;
                                                 objCard[i].y += objCard[i].select * 20;
-                                                // if (FSOUND_GetPaused(1) != true) FSOUND_PlaySound(FSOUND_FREE, sndCard);
+                                                if (Mix_PausedMusic() != 1) Mix_PlayChannel(-1, sndCard, 0);
                                             }
                                             objCard[i].select = 1;
                                         }
@@ -333,7 +334,7 @@ void CheckEvent()
                                         {
                                             objCard[i].select *= -1;
                                             objCard[i].y += objCard[i].select * 20;
-                                        //    if (FSOUND_GetPaused(1) != true) FSOUND_PlaySound(FSOUND_FREE, sndCard);
+                                           if (Mix_PausedMusic() != 1) Mix_PlayChannel(-1, sndCard, 0);
                                         }
                                         break;
                                     }
@@ -365,8 +366,8 @@ void CheckEvent()
                         }
                         if (MouseOnMute() == true && objCursor.drag == -1 && state != 0)
                         {
-                            // if (FSOUND_GetPaused(1) == true) FSOUND_SetPaused(FSOUND_ALL, 0);
-                            // else FSOUND_SetPaused(FSOUND_ALL, 1);
+                            if (Mix_PausedMusic()) Mix_ResumeMusic();
+                            else Mix_PauseMusic();
                         }
                         if (MouseOnHelp() == true && objCursor.drag == -1 && state != 0)
                         {
@@ -436,7 +437,7 @@ void CheckEvent()
 void VIDEOPOKER_Init()
 {
     //initialisations des biblioth�ques annexes
-	// FSOUND_Init(44100, 32, 0);
+	Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096);
 
 	srand(time(NULL));
 
@@ -583,19 +584,15 @@ void VIDEOPOKER_Init()
     fntList[2] = TTF_OpenFont("data/fnt/cloisterblack.ttf", 42);
 
     //Musique et sons
-	// sndCard = FSOUND_Sample_Load(FSOUND_FREE, "data/snd/card.ogg", 0, 0, 0);
-	// sndToken = FSOUND_Sample_Load(FSOUND_FREE, "data/snd/token.ogg", 0, 0, 0);
-	// sndCoin = FSOUND_Sample_Load(FSOUND_FREE, "data/snd/coin.ogg", 0, 0, 0);
+	sndCard = Mix_LoadWAV("data/snd/card.ogg");
+	sndToken = Mix_LoadWAV("data/snd/token.ogg");
+	sndCoin = Mix_LoadWAV("data/snd/coin.ogg");
 
-    // music = FSOUND_Stream_Open("data/snd/music.ogg", FSOUND_LOOP_NORMAL, 0, 0);
-	// FSOUND_Stream_Play(FSOUND_FREE, music);
-	// FSOUND_Stream_SetLoopCount(music, -1);
-	// FSOUND_SetVolume(FSOUND_ALL, 200);
+    music = Mix_LoadMUS("data/snd/music.ogg");
+	Mix_PlayMusic( music, -1 );
 
-    // noise = FSOUND_Stream_Open("data/snd/noise.ogg", FSOUND_LOOP_NORMAL, 0, 0);
-	// FSOUND_Stream_Play(FSOUND_FREE, noise);
-	// FSOUND_Stream_SetLoopCount(noise, -1);
-	// FSOUND_SetVolume(FSOUND_ALL, 100);
+    // noise = Mix_LoadMUS("data/snd/noise.ogg");
+	// Mix_PlayMusic( noise, -1 );
 }
 
 void VIDEOPOKER_Quit()
@@ -625,13 +622,13 @@ void VIDEOPOKER_Quit()
 	TTF_CloseFont(fntList[1]);
 	TTF_CloseFont(fntList[2]);
 
-	// FSOUND_Sample_Free(sndCard);
-	// FSOUND_Sample_Free(sndToken);
-	// FSOUND_Sample_Free(sndCoin);
-	// FSOUND_Stream_Stop(music);
-	// FSOUND_Stream_Stop(noise);
+	Mix_FreeChunk(sndCard);
+	Mix_FreeChunk(sndToken);
+	Mix_FreeChunk(sndCoin);
+	Mix_FreeMusic(music);
+	Mix_FreeMusic(noise);
 
-	// FSOUND_Close();
+	Mix_CloseAudio();
 	TTF_Quit();
 	SDL_Quit();
 }
@@ -642,14 +639,14 @@ void VIDEOPOKER_Game()
 	{
 	    //dessiner le packet de carte
 		// ApplySurface(-20, - 45, backDeck, screen, NULL);
-		if (MouseOnDeck() == true) ApplySurface(-20, -45, sfcDeck, screen, &sprDeck[1]);
+		if (Mix_PausedMusic() == 1) ApplySurface(-20, -45, sfcDeck, screen, &sprDeck[1]);
 		else ApplySurface(-20, -45, sfcDeck, screen, &sprDeck[0]);
 
         //afficher le score
 		DrawScore();
 		//afficher le bouton de mute
-		// if (FSOUND_GetPaused(1) == true) ApplySurface(830, 390, sfcMisc, screen, &sprMisc[5]);
-		// else  ApplySurface(830, 390, sfcMisc, screen, &sprMisc[4]);
+		if (Mix_PausedMusic() == 1) ApplySurface(830, 390, sfcMisc, screen, &sprMisc[5]);
+		else  ApplySurface(830, 390, sfcMisc, screen, &sprMisc[4]);
 		//afficher le bouton d'aide
 		if (MouseOnHelp() == true) ApplySurface(0, 390, sfcMisc, screen, &sprMisc[3]);
 		else ApplySurface(0, 390, sfcMisc, screen, &sprMisc[2]);
@@ -753,7 +750,7 @@ void VIDEOPOKER_Game()
 						{
 							objCard[i].value = Deck[i + 5];
 							objCard[i].select = 1;
-							// if (FSOUND_GetPaused(1) != true) FSOUND_PlaySound(FSOUND_FREE, sndCard);
+							if (Mix_PausedMusic() != 1) Mix_PlayChannel( -1, sndCard, 0 );
 						}
 					}
 					else
@@ -796,7 +793,7 @@ void VIDEOPOKER_Game()
 						    pot = 0;
 						}
                         //jouer un son de pi�ce
-                        // if (gameResult > 0 && pot % 10 == 0 && FSOUND_GetPaused(1) != true) FSOUND_PlaySound(FSOUND_FREE, sndCoin);
+                        if (gameResult > 0 && pot % 10 == 0 && Mix_PlayingMusic()) Mix_PlayChannel( -1, sndCoin, 0 );
 					}
 				}
 				DrawCard();
