@@ -8,8 +8,7 @@
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_mixer.h>
-// #include <SDL/SDL_rotozoom.h>
-// #include <fmod.h>
+#include "SDL_rotozoom.h"
 
 #include "main.h"
 #include "videopoker.h"
@@ -493,7 +492,7 @@ void VIDEOPOKER_Init()
 
 	//Dos des cartes et arri�re plan pour le dos du deck selon le fond des cartes
 	backCard= IMG_Load("data/img/backcard.bmp");
-	// backDeck = rotozoomSurface(backCard, 15, 1.0, 1);
+	backDeck = rotozoomSurface(backCard, 15, 1.0, 1);
 
 	//Paquet de carte (bouton haut gauche)
 	sfcDeck = IMG_Load("data/img/deck.png");
@@ -605,7 +604,7 @@ void VIDEOPOKER_Quit()
 	SDL_FreeSurface(backCard);
 	SDL_FreeSurface(sfcToken);
 	SDL_FreeSurface(sfcDeck);
-	// SDL_FreeSurface(backDeck);
+	SDL_FreeSurface(backDeck);
 	SDL_FreeSurface(score);
 	SDL_FreeSurface(mise);
 	SDL_FreeSurface(numbers);
@@ -638,7 +637,7 @@ void VIDEOPOKER_Game()
 	if (game_stop == false)
 	{
 	    //dessiner le packet de carte
-		// ApplySurface(-20, - 45, backDeck, screen, NULL);
+		ApplySurface(-20, - 45, backDeck, screen, NULL);
 		if (Mix_PausedMusic() == 1) ApplySurface(-20, -45, sfcDeck, screen, &sprDeck[1]);
 		else ApplySurface(-20, -45, sfcDeck, screen, &sprDeck[0]);
 

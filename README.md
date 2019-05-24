@@ -6,8 +6,13 @@
 
 ## Build
 
-    gcc videopoker.c main.c `sdl-config --cflags --libs` -lSDL_ttf -lSDL_image -lSDL_mixer -lm -o kingdompoker
+    gcc SDL_rotozoom.c videopoker.c main.c `sdl-config --cflags --libs` -lSDL_ttf -lSDL_image -lSDL_mixer -lm -o kingdompoker
 
 ## Run
 
     ./kingdompoker
+
+## Links
+
+* SDL - [https://www.libsdl.org/]()
+* Rotozoom - [http://www.ferzkopp.net/Software/SDL_rotozoom/]()
