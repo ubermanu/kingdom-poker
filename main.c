@@ -7,8 +7,8 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_image.h>
-#include <SDL/SDL_rotozoom.h>
-#include <fmod.h>
+// #include <SDL/SDL_rotozoom.h>
+// #include <fmod.h>
 
 #include "main.h"
 #include "videopoker.h"
@@ -34,8 +34,8 @@ int Deck[52] = {0};
 SDL_Rect sprToken[5] = {0,0}, sprHeads[24] = {0,0}, sprNumbers[18] = {0,0}, sprColor[4] = {0,0}, sprDeck[2] = {0,0}, sprMenu[4] = {0,0}, sprMisc[6] = {0,0};
 TTF_Font *fntList[3] = {NULL};
 
-FSOUND_SAMPLE *sndCard = NULL, *sndToken = NULL, *sndCoin = NULL;
-FSOUND_STREAM *music = NULL, *noise = NULL;
+// FSOUND_SAMPLE *sndCard = NULL, *sndToken = NULL, *sndCoin = NULL;
+// FSOUND_STREAM *music = NULL, *noise = NULL;
 
 FILE * savFile;
 
@@ -45,31 +45,31 @@ int main(int argc, char *argv[])
 	atexit(SDL_Quit);
     TTF_Init();
 
-	//Création de la fenêtre principale
+	//Crï¿½ation de la fenï¿½tre principale
 	screen = SDL_SetVideoMode(880, 440, 32, SDL_HWSURFACE|SDL_DOUBLEBUF);
 	SDL_WM_SetCaption("Kingdom Poker", NULL);
 	SDL_WM_SetIcon(IMG_Load("data/img/icon.png"), NULL); //32*32
 
-    //Initialisation générale du jeu
+    //Initialisation gï¿½nï¿½rale du jeu
 	VIDEOPOKER_Init();
 
 	while (!done)
 	{
 		//cadencer le jeu
 		SDL_Delay(10);
-		//Dessiner l'arrière plan graphique
+		//Dessiner l'arriï¿½re plan graphique
 		ApplySurface(0, 0, background, screen, NULL);
-		//Vérifier l'état et l'instant du jeu
+		//Vï¿½rifier l'ï¿½tat et l'instant du jeu
 		VIDEOPOKER_Game();
-		//Déplacer et animer le curseur
+		//Dï¿½placer et animer le curseur
 		ApplySurface(objCursor.x - objCursor.state * 10, objCursor.y - objCursor.state * 15, objCursor.sfc, screen, &objCursor.spr[objCursor.state]);
-		//Actualiser l'écran
+		//Actualiser l'ï¿½cran
 		SDL_Flip(screen);
-		//Vérifier les intéractions avec le joueur
+		//Vï¿½rifier les intï¿½ractions avec le joueur
 		CheckEvent();
 	}
 
-    //libération de la mémoire et fermeture des librairies utilisées
+    //libï¿½ration de la mï¿½moire et fermeture des librairies utilisï¿½es
 	VIDEOPOKER_Quit();
 	return 0;
 }
@@ -117,7 +117,7 @@ void DrawToken()
 
 void DrawScore()
 {
-    char score_buffer[10];
+    char *score_buffer = malloc(10*sizeof(char));
 	sprintf(score_buffer, "%d", bank);
 	SDL_FreeSurface(score);
 	score = TTF_RenderText_Blended(fntList[0], score_buffer, white);
@@ -161,13 +161,13 @@ void CheckEvent()
 						if (game_stop == 1)
 						{
 							game_stop = 0;
-							FSOUND_SetPaused(FSOUND_ALL, 0);
+							// FSOUND_SetPaused(FSOUND_ALL, 0);
 						}
 						else
 						{
 							objCursor.drag = -1;
 							game_stop = 1;
-							FSOUND_SetPaused(FSOUND_ALL, 1);
+							// FSOUND_SetPaused(FSOUND_ALL, 1);
 						}
 					}
 					break;
@@ -230,7 +230,7 @@ void CheckEvent()
                                         savFile = fopen("data/sav.ini","r");
                                         if (savFile != NULL)
                                         {
-                                            char sav_buffer[32];
+                                            char *sav_buffer = malloc(32*sizeof(char));
                                             char* data_buffer;
                                             data_buffer = fgets(sav_buffer, 32, savFile);
                                             bank = atoi(data_buffer);
@@ -282,7 +282,7 @@ void CheckEvent()
                                     pot = 0;
                                     for (i = 5; i < cntToken; i++) pot += objToken[i].value;
                                     bank -= pot;
-                                    if (FSOUND_GetPaused(1) != true) FSOUND_PlaySound(FSOUND_FREE, sndToken);
+                                    // if (FSOUND_GetPaused(1) != true) FSOUND_PlaySound(FSOUND_FREE, sndToken);
                                 }
                                 if (MouseOnDeck() == true && objCursor.drag == -1 && pot > 0)
                                 {
@@ -291,7 +291,7 @@ void CheckEvent()
                                 objCursor.drag = -1;
                             }
                             break;
-                            case 3: //Intéractions à la distribution des cartes
+                            case 3: //Intï¿½ractions ï¿½ la distribution des cartes
                             {
                                 for (i = 0; i < 5; i++)
                                 {
@@ -303,7 +303,7 @@ void CheckEvent()
                                             {
                                                 objCard[i].select *= -1;
                                                 objCard[i].y += objCard[i].select * 20;
-                                                if (FSOUND_GetPaused(1) != true) FSOUND_PlaySound(FSOUND_FREE, sndCard);
+                                                // if (FSOUND_GetPaused(1) != true) FSOUND_PlaySound(FSOUND_FREE, sndCard);
                                             }
                                         }
                                         break;
@@ -313,7 +313,7 @@ void CheckEvent()
                                             {
                                                 objCard[i].select = -1;
                                                 objCard[i].y += objCard[i].select * 20;
-                                                if (FSOUND_GetPaused(1) != true) FSOUND_PlaySound(FSOUND_FREE, sndCard);
+                                                // if (FSOUND_GetPaused(1) != true) FSOUND_PlaySound(FSOUND_FREE, sndCard);
                                             }
                                             objCard[i].select = -1;
                                         }
@@ -324,7 +324,7 @@ void CheckEvent()
                                             {
                                                 objCard[i].select = 1;
                                                 objCard[i].y += objCard[i].select * 20;
-                                                if (FSOUND_GetPaused(1) != true) FSOUND_PlaySound(FSOUND_FREE, sndCard);
+                                                // if (FSOUND_GetPaused(1) != true) FSOUND_PlaySound(FSOUND_FREE, sndCard);
                                             }
                                             objCard[i].select = 1;
                                         }
@@ -333,7 +333,7 @@ void CheckEvent()
                                         {
                                             objCard[i].select *= -1;
                                             objCard[i].y += objCard[i].select * 20;
-                                           if (FSOUND_GetPaused(1) != true) FSOUND_PlaySound(FSOUND_FREE, sndCard);
+                                        //    if (FSOUND_GetPaused(1) != true) FSOUND_PlaySound(FSOUND_FREE, sndCard);
                                         }
                                         break;
                                     }
@@ -365,8 +365,8 @@ void CheckEvent()
                         }
                         if (MouseOnMute() == true && objCursor.drag == -1 && state != 0)
                         {
-                            if (FSOUND_GetPaused(1) == true) FSOUND_SetPaused(FSOUND_ALL, 0);
-                            else FSOUND_SetPaused(FSOUND_ALL, 1);
+                            // if (FSOUND_GetPaused(1) == true) FSOUND_SetPaused(FSOUND_ALL, 0);
+                            // else FSOUND_SetPaused(FSOUND_ALL, 1);
                         }
                         if (MouseOnHelp() == true && objCursor.drag == -1 && state != 0)
                         {
@@ -386,7 +386,7 @@ void CheckEvent()
                         savFile = fopen("data/sav.ini","w");
                         if (savFile != NULL)
                         {
-                            char sav_buffer[32];
+                            char *sav_buffer=malloc(32*sizeof(char));
                             switch (state)
                             {
                                 case 4: sprintf(sav_buffer, "%d", bank + pot); break;
@@ -398,7 +398,7 @@ void CheckEvent()
                         }
                         //reprendre le jeu
 				        game_stop = 0;
-                        FSOUND_SetPaused(FSOUND_ALL, 0);
+                        // FSOUND_SetPaused(FSOUND_ALL, 0);
 				    }
 				    else done++;
 				}
@@ -435,8 +435,8 @@ void CheckEvent()
 
 void VIDEOPOKER_Init()
 {
-    //initialisations des bibliothèques annexes
-	FSOUND_Init(44100, 32, 0);
+    //initialisations des bibliothï¿½ques annexes
+	// FSOUND_Init(44100, 32, 0);
 
 	srand(time(NULL));
 
@@ -445,17 +445,17 @@ void VIDEOPOKER_Init()
     pot = 0;
     bank = 50;
 
-    //initialisation du fond du jeu et de l'écan d'accueil
+    //initialisation du fond du jeu et de l'ï¿½can d'accueil
 	background = SDL_LoadBMP("data/img/background.bmp");
 	title = SDL_LoadBMP("data/img/title.bmp");
 	sfcHelp = SDL_LoadBMP("data/img/help.bmp");
 
-    //ombre portée
+    //ombre portï¿½e
 	shadow = SDL_CreateRGBSurface(SDL_HWSURFACE, 880, 480, 32, 0, 0, 0, 0);
 	SDL_FillRect(shadow, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
 	SDL_SetAlpha(shadow, SDL_SRCALPHA, 128);
 
-    //ombre désignant la partie du menu séléctionnée
+    //ombre dï¿½signant la partie du menu sï¿½lï¿½ctionnï¿½e
 	shadowPart = SDL_CreateRGBSurface(SDL_HWSURFACE, 440, 480, 32, 0, 0, 0, 0);
 	SDL_FillRect(shadowPart, NULL, SDL_MapRGB(screen->format, 255, 255, 255));
 	SDL_SetAlpha(shadowPart, SDL_SRCALPHA, 64);
@@ -490,9 +490,9 @@ void VIDEOPOKER_Init()
 	//Bordure avant des cartes
 	frontCard = IMG_Load("data/img/frontcard.png");
 
-	//Dos des cartes et arrière plan pour le dos du deck selon le fond des cartes
+	//Dos des cartes et arriï¿½re plan pour le dos du deck selon le fond des cartes
 	backCard= IMG_Load("data/img/backcard.bmp");
-	backDeck = rotozoomSurface(backCard, 15, 1.0, 1);
+	// backDeck = rotozoomSurface(backCard, 15, 1.0, 1);
 
 	//Paquet de carte (bouton haut gauche)
 	sfcDeck = IMG_Load("data/img/deck.png");
@@ -514,7 +514,7 @@ void VIDEOPOKER_Init()
 		sprMenu[i].h = 100;
 	}
 
-	//Activer, désactiver le son
+	//Activer, dï¿½sactiver le son
 	sfcMisc = IMG_Load("data/img/misc.png");
 	for (i = 0; i < 6; i++)
 	{
@@ -557,7 +557,7 @@ void VIDEOPOKER_Init()
 		sprColor[i].h = 40;
 	}
 
-	//Têtes (As, Valet, Dame, Roi)
+	//Tï¿½tes (As, Valet, Dame, Roi)
 	heads = IMG_Load("data/img/heads.png");
 	for (i = 0; i < 24; i++)
 	{
@@ -583,24 +583,24 @@ void VIDEOPOKER_Init()
     fntList[2] = TTF_OpenFont("data/fnt/cloisterblack.ttf", 42);
 
     //Musique et sons
-	sndCard = FSOUND_Sample_Load(FSOUND_FREE, "data/snd/card.ogg", 0, 0, 0);
-	sndToken = FSOUND_Sample_Load(FSOUND_FREE, "data/snd/token.ogg", 0, 0, 0);
-	sndCoin = FSOUND_Sample_Load(FSOUND_FREE, "data/snd/coin.ogg", 0, 0, 0);
+	// sndCard = FSOUND_Sample_Load(FSOUND_FREE, "data/snd/card.ogg", 0, 0, 0);
+	// sndToken = FSOUND_Sample_Load(FSOUND_FREE, "data/snd/token.ogg", 0, 0, 0);
+	// sndCoin = FSOUND_Sample_Load(FSOUND_FREE, "data/snd/coin.ogg", 0, 0, 0);
 
-    music = FSOUND_Stream_Open("data/snd/music.ogg", FSOUND_LOOP_NORMAL, 0, 0);
-	FSOUND_Stream_Play(FSOUND_FREE, music);
-	FSOUND_Stream_SetLoopCount(music, -1);
-	FSOUND_SetVolume(FSOUND_ALL, 200);
+    // music = FSOUND_Stream_Open("data/snd/music.ogg", FSOUND_LOOP_NORMAL, 0, 0);
+	// FSOUND_Stream_Play(FSOUND_FREE, music);
+	// FSOUND_Stream_SetLoopCount(music, -1);
+	// FSOUND_SetVolume(FSOUND_ALL, 200);
 
-    noise = FSOUND_Stream_Open("data/snd/noise.ogg", FSOUND_LOOP_NORMAL, 0, 0);
-	FSOUND_Stream_Play(FSOUND_FREE, noise);
-	FSOUND_Stream_SetLoopCount(noise, -1);
-	FSOUND_SetVolume(FSOUND_ALL, 100);
+    // noise = FSOUND_Stream_Open("data/snd/noise.ogg", FSOUND_LOOP_NORMAL, 0, 0);
+	// FSOUND_Stream_Play(FSOUND_FREE, noise);
+	// FSOUND_Stream_SetLoopCount(noise, -1);
+	// FSOUND_SetVolume(FSOUND_ALL, 100);
 }
 
 void VIDEOPOKER_Quit()
 {
-	//Libérer la mémoire
+	//Libï¿½rer la mï¿½moire
 	SDL_FreeSurface(background);
 	SDL_FreeSurface(sfcText);
 	SDL_FreeSurface(sfcCard);
@@ -608,7 +608,7 @@ void VIDEOPOKER_Quit()
 	SDL_FreeSurface(backCard);
 	SDL_FreeSurface(sfcToken);
 	SDL_FreeSurface(sfcDeck);
-	SDL_FreeSurface(backDeck);
+	// SDL_FreeSurface(backDeck);
 	SDL_FreeSurface(score);
 	SDL_FreeSurface(mise);
 	SDL_FreeSurface(numbers);
@@ -625,13 +625,13 @@ void VIDEOPOKER_Quit()
 	TTF_CloseFont(fntList[1]);
 	TTF_CloseFont(fntList[2]);
 
-	FSOUND_Sample_Free(sndCard);
-	FSOUND_Sample_Free(sndToken);
-	FSOUND_Sample_Free(sndCoin);
-	FSOUND_Stream_Stop(music);
-	FSOUND_Stream_Stop(noise);
+	// FSOUND_Sample_Free(sndCard);
+	// FSOUND_Sample_Free(sndToken);
+	// FSOUND_Sample_Free(sndCoin);
+	// FSOUND_Stream_Stop(music);
+	// FSOUND_Stream_Stop(noise);
 
-	FSOUND_Close();
+	// FSOUND_Close();
 	TTF_Quit();
 	SDL_Quit();
 }
@@ -641,14 +641,15 @@ void VIDEOPOKER_Game()
 	if (game_stop == false)
 	{
 	    //dessiner le packet de carte
-		ApplySurface(-20, - 45, backDeck, screen, NULL);
+		// ApplySurface(-20, - 45, backDeck, screen, NULL);
 		if (MouseOnDeck() == true) ApplySurface(-20, -45, sfcDeck, screen, &sprDeck[1]);
 		else ApplySurface(-20, -45, sfcDeck, screen, &sprDeck[0]);
+
         //afficher le score
 		DrawScore();
 		//afficher le bouton de mute
-		if (FSOUND_GetPaused(1) == true) ApplySurface(830, 390, sfcMisc, screen, &sprMisc[5]);
-		else  ApplySurface(830, 390, sfcMisc, screen, &sprMisc[4]);
+		// if (FSOUND_GetPaused(1) == true) ApplySurface(830, 390, sfcMisc, screen, &sprMisc[5]);
+		// else  ApplySurface(830, 390, sfcMisc, screen, &sprMisc[4]);
 		//afficher le bouton d'aide
 		if (MouseOnHelp() == true) ApplySurface(0, 390, sfcMisc, screen, &sprMisc[3]);
 		else ApplySurface(0, 390, sfcMisc, screen, &sprMisc[2]);
@@ -684,7 +685,7 @@ void VIDEOPOKER_Game()
 				else
 				{
 					if (pot > 0) DrawText("Vous n'avez plus de jetons!");
-					else DrawText("La partie est terminée!");
+					else DrawText("La partie est terminï¿½e!");
 				}
 				sprEmoIndex = 0;
 				DrawToken();
@@ -739,7 +740,7 @@ void VIDEOPOKER_Game()
 			break;
 			case 4:
 			{
-				//Animation du changement des cartes souhaité
+				//Animation du changement des cartes souhaitï¿½
 				for (i = 0; i < 5; i++)
 				{
 					if (objCard[i].select == -1)
@@ -752,7 +753,7 @@ void VIDEOPOKER_Game()
 						{
 							objCard[i].value = Deck[i + 5];
 							objCard[i].select = 1;
-							if (FSOUND_GetPaused(1) != true) FSOUND_PlaySound(FSOUND_FREE, sndCard);
+							// if (FSOUND_GetPaused(1) != true) FSOUND_PlaySound(FSOUND_FREE, sndCard);
 						}
 					}
 					else
@@ -764,7 +765,7 @@ void VIDEOPOKER_Game()
 					}
 				}
 				gameResult = CheckCardCombo(&objCard);
-				//Afficher le résultat du tour joué
+				//Afficher le rï¿½sultat du tour jouï¿½
 				if (objCard[0].select > 0 && objCard[1].select > 0 && objCard[2].select > 0 && objCard[3].select > 0 && objCard[4].select > 0)
 				{
 					switch (gameResult)
@@ -773,15 +774,15 @@ void VIDEOPOKER_Game()
 						case 2: DrawText("Double paire!"); break;
 						case 3: DrawText("C'est un Brelan!"); break;
 						case 4: DrawText("Une Quinte!"); break;
-						case 5: DrawText("Bien joué, Flush!"); break;
+						case 5: DrawText("Bien jouï¿½, Flush!"); break;
 						case 6: DrawText("Quelle chance! Full!"); break;
-						case 9: DrawText("C'est bien un Carré!"); break;
+						case 9: DrawText("C'est bien un Carrï¿½!"); break;
 						case 11: DrawText("Une Quinte Flush!"); break;
 						case 21: DrawText("Quinte Flush Royale! Woaw!"); break;
 						default: DrawText("Perdu, on retente sa chance?"); sprEmoIndex = 2;
 					}
 					if (gameResult > 0) sprEmoIndex = 1;
-					//on limite le score maximum à 99999
+					//on limite le score maximum ï¿½ 99999
 					if (pot != 0)
 					{
 						pot--;
@@ -794,8 +795,8 @@ void VIDEOPOKER_Game()
 						    bank = 99999;
 						    pot = 0;
 						}
-                        //jouer un son de pièce
-                        if (gameResult > 0 && pot % 10 == 0 && FSOUND_GetPaused(1) != true) FSOUND_PlaySound(FSOUND_FREE, sndCoin);
+                        //jouer un son de piï¿½ce
+                        // if (gameResult > 0 && pot % 10 == 0 && FSOUND_GetPaused(1) != true) FSOUND_PlaySound(FSOUND_FREE, sndCoin);
 					}
 				}
 				DrawCard();
@@ -807,7 +808,7 @@ void VIDEOPOKER_Game()
 	}
 	else
 	{
-	    //si le jeu est stoppé, on vérifie l'etat du jeu pour n'afficher que l'element en cours de traitement
+	    //si le jeu est stoppï¿½, on vï¿½rifie l'etat du jeu pour n'afficher que l'element en cours de traitement
 		ApplySurface(0, 0, shadow, screen, NULL);
 		ApplySurface(shwSelected * 440, 0, shadowPart, screen, NULL);
 		ApplySurface(110, 350, sfcMenu, screen, &sprMenu[2]);
