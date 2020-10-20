@@ -13,9 +13,7 @@ script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
-region_enabled = true
-region_rect = Rect2( 2, 2, 111, 111 )
-region_filter_clip = true
+hframes = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
