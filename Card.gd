@@ -1,55 +1,59 @@
-extends Node2D
+extends KinematicBody2D
 
 # Contains the id of the card
 # A deck contains 52 cards maximum
-export (int, 0, 51, 1) var id = 0
+export (int, 0, 51, 1) var id = 0 setget set_identifier
 
 # If TRUE, shows the face
-export (bool) var flipped = false
+export (bool) var flipped = false setget set_flipped
 
-func _ready():
+# Update the flipped status
+# If flipped shows the back side of the card
+# If not, shows the front side
+func set_flipped(is_flipped):
+	flipped = is_flipped
 	if flipped:
-		show_face()
+		$Front.visible = false
+		$Back.visible = true
 	else:
-		show_back()
+		$Front.visible = true
+		$Back.visible = false
 
-func reset():
-	$Back.visible = false
-	$Color.visible = false
-	$Ace.visible = false
-	$Number.visible = false
-	$HeadBlack.visible = false
-	$HeadRed.visible = false
-
-func show_back():
-	$Back.visible = true
-
-func show_face():
+# Update the front side of the card when setting the id
+func set_identifier(new_id):
+	id = new_id
+	
+	# Reset features
+	$Front/Ace.visible = false
+	$Front/Number.visible = false
+	$Front/HeadBlack.visible = false
+	$Front/HeadRed.visible = false
+	
 	var color = Deck.getColor(id)
 	var value = Deck.getValue(id)
 	
 	# Set color
-	$Color.visible = true
-	$Color.frame = color
+	$Front/Color.visible = true
+	$Front/Color.frame = color
 	
 	# Set ace
 	if Deck.isAce(id):
-		$Ace.visible = true
-		$Ace.frame = color
+		$Front/Ace.visible = true
+		$Front/Ace.frame = color
 	
 	# Set number
 	if Deck.isNumber(id):
-		$Number.visible = true
-		$Number.frame_coords.x = value - 1
+		$Front/Number.visible = true
+		$Front/Number.frame_coords.x = value - 1
 		if Deck.isBlackColor(id):
-			$Number.frame_coords.y = 1
+			$Front/Number.frame_coords.y = 1
 	
 	# Set head
 	if Deck.isHead(id):
 		var head = null
 		if Deck.isBlackColor(id):
-			head = $HeadBlack
+			head = $Front/HeadBlack
 		else:
-			head = $HeadRed
+			head = $Front/HeadRed
 		head.visible = true
 		head.frame_coords.y = value - 10

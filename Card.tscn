@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://images/backcard.png" type="Texture" id=1]
 [ext_resource path="res://images/frontcard.png" type="Texture" id=2]
@@ -17,35 +17,30 @@ colors = PoolColorArray( 1, 1, 1, 1 )
 gradient = SubResource( 1 )
 width = 120
 
-[node name="Card" type="Node2D"]
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 75, 75 )
+
+[node name="Card" type="KinematicBody2D"]
 script = ExtResource( 6 )
 
-[node name="Front" type="Sprite" parent="."]
+[node name="Front" type="Node2D" parent="."]
+visible = false
+
+[node name="Background" type="Sprite" parent="Front"]
 position = Vector2( 0.250002, -0.500003 )
 scale = Vector2( 1.1, 135 )
 texture = SubResource( 2 )
-__meta__ = {
-"_edit_lock_": true
-}
 
-[node name="Back" type="Sprite" parent="."]
-visible = false
-position = Vector2( 0, -3 )
-texture = ExtResource( 1 )
-
-[node name="Border" type="Sprite" parent="."]
+[node name="Border" type="Sprite" parent="Front"]
 texture = ExtResource( 2 )
-__meta__ = {
-"_edit_lock_": true
-}
 
-[node name="Ace" type="Sprite" parent="."]
+[node name="Ace" type="Sprite" parent="Front"]
 visible = false
 position = Vector2( 7, 5 )
 texture = ExtResource( 8 )
 hframes = 4
 
-[node name="Number" type="Sprite" parent="."]
+[node name="Number" type="Sprite" parent="Front"]
 visible = false
 texture = ExtResource( 3 )
 offset = Vector2( 10, 10 )
@@ -53,20 +48,31 @@ vframes = 2
 hframes = 9
 frame = 8
 
-[node name="HeadRed" type="Sprite" parent="."]
+[node name="HeadRed" type="Sprite" parent="Front"]
 visible = false
 texture = ExtResource( 5 )
 vframes = 3
 hframes = 3
 
-[node name="HeadBlack" type="Sprite" parent="."]
+[node name="HeadBlack" type="Sprite" parent="Front"]
 visible = false
 texture = ExtResource( 7 )
 vframes = 3
 hframes = 3
 
-[node name="Color" type="Sprite" parent="."]
-visible = false
+[node name="Color" type="Sprite" parent="Front"]
 position = Vector2( -50, -48 )
 texture = ExtResource( 4 )
 hframes = 4
+
+[node name="Back" type="Node2D" parent="."]
+
+[node name="Background" type="Sprite" parent="Back"]
+position = Vector2( 0, -3 )
+texture = ExtResource( 1 )
+
+[node name="Border" type="Sprite" parent="Back"]
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 3 )
