@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://images/misc.png" type="Texture" id=1]
+[ext_resource path="res://Bank.gd" type="Script" id=2]
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://fonts/cloisterblack.ttf"
@@ -10,6 +11,7 @@ size = 30
 font_data = SubResource( 1 )
 
 [node name="Bank" type="Node2D"]
+script = ExtResource( 2 )
 
 [node name="Score" type="RichTextLabel" parent="."]
 margin_left = 19.5848

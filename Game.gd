@@ -1,16 +1,41 @@
 extends Node2D
 
+export (int) var score = 50
 var cards = []
 var step = 0
 
 enum Steps { NEW, BET, REVEAL, CHANGE, RESULT }
 
+signal score_updated(score)
+
 func _ready():
 	$TokenList.visible = false
 	cards = range(52)
-	shuffle()
-	update_cards()
-	flip_cards(true)
+	emit_signal("score_updated", score)
+	play_step()
+
+func play_step():
+	
+	if step == 0:
+		$TokenList.visible = false
+		$Board.visible = false
+		shuffle()
+		update_cards()
+		next_step()
+		emit_signal("score_updated", score)
+	
+	if step == 1:
+		$TokenList.visible = true
+	
+	if step == 2:
+		$TokenList.visible = false
+		$Board.visible = true
+		flip_cards(true)
+
+
+func next_step():
+	step += 1
+	step %= Steps.size()
 
 func update_cards():
 	var ids = cards.slice(0, 4)

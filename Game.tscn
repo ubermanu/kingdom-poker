@@ -22,3 +22,4 @@ active = false
 position = Vector2( 28.645, 29.435 )
 
 [node name="TokenList" parent="." instance=ExtResource( 2 )]
+[connection signal="score_updated" from="." to="Bank" method="_on_Game_score_updated"]
