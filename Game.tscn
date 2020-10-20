@@ -22,4 +22,15 @@ active = false
 position = Vector2( 28.645, 29.435 )
 
 [node name="TokenList" parent="." instance=ExtResource( 2 )]
+
+[node name="NextButton" type="Button" parent="."]
+margin_left = 773.796
+margin_top = 14.7194
+margin_right = 835.796
+margin_bottom = 98.7194
+text = "NEXT >"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="score_updated" from="." to="Bank" method="_on_Game_score_updated"]
+[connection signal="pressed" from="NextButton" to="." method="_on_NextButton_pressed"]

@@ -1,41 +1,50 @@
 extends Node2D
 
-export (int) var score = 50
+export (int) var score = 50 setget set_score
+export (int) var pot = 0
 var cards = []
-var step = 0
 
-enum Steps { NEW, BET, REVEAL, CHANGE, RESULT }
-
+signal step_finished
 signal score_updated(score)
+signal add_token_to_pot(value)
 
 func _ready():
+	$Board.visible = false
 	$TokenList.visible = false
 	cards = range(52)
+	set_score(score)
+	runtime()
+
+func set_score(new_score):
+	score = new_score
 	emit_signal("score_updated", score)
-	play_step()
 
-func play_step():
+func runtime():
+	# Reset setup
+	$TokenList.visible = false
+	$Board.visible = false
+	flip_cards(true)
+	shuffle()
+	update_cards()
 	
-	if step == 0:
-		$TokenList.visible = false
-		$Board.visible = false
-		shuffle()
-		update_cards()
-		next_step()
-		emit_signal("score_updated", score)
+	# Show token list
+	$TokenList.visible = true
+	$TokenList/Token.draggable = true
+	$TokenList/Token2.draggable = true
+	$TokenList/Token3.draggable = true
+	$TokenList/Token4.draggable = true
+	yield(self, "step_finished")
 	
-	if step == 1:
-		$TokenList.visible = true
+	$TokenList.visible = false
+	$Board.visible = true
+	flip_cards(false)
+	yield(self, "step_finished")
 	
-	if step == 2:
-		$TokenList.visible = false
-		$Board.visible = true
-		flip_cards(true)
-
-
-func next_step():
-	step += 1
-	step %= Steps.size()
+	if score <= 0:
+		# TODO: End game
+		pass
+	
+	runtime()
 
 func update_cards():
 	var ids = cards.slice(0, 4)
@@ -55,3 +64,6 @@ func flip_cards(flipped):
 func shuffle():
 	randomize()
 	cards.shuffle()
+
+func _on_NextButton_pressed():
+	emit_signal("step_finished")
