@@ -14,6 +14,9 @@ func _on_Token_input_event(_viewport, event, _shape_idx):
 			offset = get_viewport().get_mouse_position() - position
 			dragging = true
 		elif event.button_index == BUTTON_LEFT and !event.pressed:
+			if dragging == true:
+				$AudioStreamPlayer.stop()
+				$AudioStreamPlayer.play()
 			dragging = false
 
 func _on_VisibilityNotifier2D_screen_exited():

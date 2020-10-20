@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://images/token.png" type="Texture" id=1]
 [ext_resource path="res://Token.gd" type="Script" id=2]
+[ext_resource path="res://sounds/token.ogg" type="AudioStream" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 55.8531
@@ -22,6 +23,9 @@ shape = SubResource( 1 )
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
 position = Vector2( -3.8147e-06, -3.8147e-06 )
 scale = Vector2( 5.55, 5.55 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
 [connection signal="input_event" from="." to="." method="_on_Token_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_Token_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_Token_mouse_exited"]
