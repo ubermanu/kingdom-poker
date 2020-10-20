@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://images/misc.png" type="Texture" id=1]
 [ext_resource path="res://MusicButton.gd" type="Script" id=2]
+[ext_resource path="res://sounds/noise.ogg" type="AudioStream" id=3]
+[ext_resource path="res://sounds/music.ogg" type="AudioStream" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 25, 25 )
@@ -17,4 +19,12 @@ texture = ExtResource( 1 )
 vframes = 3
 hframes = 2
 frame = 4
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = -10.0
+
+[node name="Crowd" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+volume_db = -19.0
 [connection signal="input_event" from="." to="." method="_on_MusicButton_input_event"]
