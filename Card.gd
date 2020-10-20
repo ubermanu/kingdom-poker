@@ -65,4 +65,5 @@ func set_identifier(new_id):
 func _on_Card_input_event(_viewport, event, _shape_idx):
 	if selectable and event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT and event.pressed:
+			$FlipEffect.play()
 			set_flipped(!flipped)
