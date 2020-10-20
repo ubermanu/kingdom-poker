@@ -44,7 +44,6 @@ visible = false
 position = Vector2( 7, 5 )
 texture = ExtResource( 8 )
 hframes = 4
-region_rect = Rect2( 0, 0, 125, 120 )
 
 [node name="Number" type="Sprite" parent="."]
 visible = false
@@ -53,29 +52,21 @@ offset = Vector2( 10, 10 )
 vframes = 2
 hframes = 9
 frame = 8
-region_enabled = true
-region_rect = Rect2( 0, 0, 900, 160 )
 
 [node name="HeadRed" type="Sprite" parent="."]
 visible = false
 texture = ExtResource( 5 )
 vframes = 3
 hframes = 3
-region_enabled = true
-region_rect = Rect2( 0, 0, 360, 375 )
 
 [node name="HeadBlack" type="Sprite" parent="."]
 visible = false
 texture = ExtResource( 7 )
 vframes = 3
 hframes = 3
-region_enabled = true
-region_rect = Rect2( 0, 0, 360, 375 )
 
 [node name="Color" type="Sprite" parent="."]
 visible = false
 position = Vector2( -50, -48 )
 texture = ExtResource( 4 )
 hframes = 4
-region_enabled = true
-region_rect = Rect2( 0, 0, 156, 40 )
