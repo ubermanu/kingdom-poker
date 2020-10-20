@@ -37,7 +37,8 @@ func isAce(id):
 
 # Returns TRUE if the value is greater than
 func isNumber(id):
-	return getValue(id) < 10
+	var value = getValue(id)
+	return 0 < value and value < 10
 
 # Returns TRUE if the card is head
 func isHead(id):
