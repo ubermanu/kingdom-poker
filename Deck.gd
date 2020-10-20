@@ -17,6 +17,16 @@ const Heads = {
 func getColor(id):
 	return round(id / 13)
 
+# Returns TRUE if the color is black
+func isBlackColor(id):
+	var color = getColor(id)
+	return color == Deck.Colors.SPADE or color == Deck.Colors.CLUB
+
+# Returns TRUE if the color is red
+func isRedColor(id):
+	var color = getColor(id)
+	return color == Deck.Colors.HEART or color == Deck.Colors.DIAMOND
+
 # Get the current card number in the suite
 func getValue(id):
 	return id % 13

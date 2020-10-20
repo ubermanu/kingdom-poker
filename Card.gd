@@ -20,15 +20,15 @@ func _ready():
 	if Deck.isNumber(id):
 		$Number.visible = true
 		$Number.frame_coords.x = value - 1
-		if color == Deck.Colors.SPADE or color == Deck.Colors.CLUB:
+		if Deck.isBlackColor(id):
 			$Number.frame_coords.y = 1
 	
 	# Set head
 	if Deck.isHead(id):
 		var head = null
-		if color == Deck.Colors.SPADE or color == Deck.Colors.CLUB:
+		if Deck.isBlackColor(id):
 			head = $HeadBlack
 		else:
 			head = $HeadRed
 		head.visible = true
-		head.frames_coord.x = value - 10
+		head.frame_coords.y = value - 10

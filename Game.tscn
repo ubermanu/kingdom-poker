@@ -13,8 +13,12 @@
 position = Vector2( 842.576, 405.311 )
 
 [node name="Card" parent="." instance=ExtResource( 3 )]
-position = Vector2( 424.587, 201.538 )
+position = Vector2( 421.023, 209.556 )
 id = 5
 
+[node name="Card2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 615.239, 220.247 )
+id = 24
+
 [node name="Token" parent="." instance=ExtResource( 2 )]
-position = Vector2( 204.299, 206.841 )
+position = Vector2( 198.063, 170.314 )
