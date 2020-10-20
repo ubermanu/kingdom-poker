@@ -20,7 +20,7 @@ width = 120
 [node name="Card" type="Node2D"]
 script = ExtResource( 6 )
 
-[node name="Background" type="Sprite" parent="."]
+[node name="Front" type="Sprite" parent="."]
 position = Vector2( 0.250002, -0.500003 )
 scale = Vector2( 1.1, 135 )
 texture = SubResource( 2 )
@@ -73,6 +73,7 @@ region_enabled = true
 region_rect = Rect2( 0, 0, 360, 375 )
 
 [node name="Color" type="Sprite" parent="."]
+visible = false
 position = Vector2( -50, -48 )
 texture = ExtResource( 4 )
 hframes = 4

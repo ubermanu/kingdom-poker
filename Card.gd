@@ -4,11 +4,32 @@ extends Node2D
 # A deck contains 52 cards maximum
 export (int, 0, 51, 1) var id = 0
 
+# If TRUE, shows the face
+export (bool) var flipped = false
+
 func _ready():
+	if flipped:
+		show_face()
+	else:
+		show_back()
+
+func reset():
+	$Back.visible = false
+	$Color.visible = false
+	$Ace.visible = false
+	$Number.visible = false
+	$HeadBlack.visible = false
+	$HeadRed.visible = false
+
+func show_back():
+	$Back.visible = true
+
+func show_face():
 	var color = Deck.getColor(id)
 	var value = Deck.getValue(id)
 	
 	# Set color
+	$Color.visible = true
 	$Color.frame = color
 	
 	# Set ace
