@@ -11,6 +11,7 @@
 
 [node name="MusicButton" parent="." instance=ExtResource( 4 )]
 position = Vector2( 842.576, 405.311 )
+active = false
 
 [node name="Card" parent="." instance=ExtResource( 3 )]
 position = Vector2( 421.023, 209.556 )
