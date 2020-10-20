@@ -21,6 +21,7 @@ width = 120
 extents = Vector2( 75, 75 )
 
 [node name="Card" type="KinematicBody2D"]
+input_pickable = true
 script = ExtResource( 6 )
 
 [node name="Front" type="Node2D" parent="."]
@@ -76,3 +77,4 @@ texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 3 )
+[connection signal="input_event" from="." to="." method="_on_Card_input_event"]

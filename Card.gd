@@ -7,6 +7,9 @@ export (int, 0, 51, 1) var id = 0 setget set_identifier
 # If TRUE, shows the face
 export (bool) var flipped = false setget set_flipped
 
+# If TRUE, can be flipped
+export (bool) var selectable = true
+
 # Update the flipped status
 # If flipped shows the back side of the card
 # If not, shows the front side
@@ -57,3 +60,9 @@ func set_identifier(new_id):
 			head = $Front/HeadRed
 		head.visible = true
 		head.frame_coords.y = value - 10
+
+# Toggle card if selectable
+func _on_Card_input_event(_viewport, event, _shape_idx):
+	if selectable and event is InputEventMouseButton:
+		if event.button_index == BUTTON_LEFT and event.pressed:
+			set_flipped(!flipped)
