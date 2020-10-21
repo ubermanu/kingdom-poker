@@ -1,23 +1,29 @@
 extends Node2D
 
-export (int) var score = 50 setget set_score
-export (int) var pot = 0
+export (int) var bank = 50 setget set_bank
+export (int) var pot = 0 setget set_pot
 var cards = []
 
 signal step_finished
-signal score_updated(score)
+signal bank_updated(score)
+signal pot_updated(pot)
 signal add_token_to_pot(value)
 
 func _ready():
 	$Board.visible = false
 	$TokenList.visible = false
 	cards = range(52)
-	set_score(score)
+	set_bank(bank)
+	set_pot(pot)
 	runtime()
 
-func set_score(new_score):
-	score = new_score
-	emit_signal("score_updated", score)
+func set_bank(amount):
+	bank = amount
+	emit_signal("bank_updated", bank)
+
+func set_pot(amount):
+	pot = amount
+	emit_signal("pot_updated", pot)
 
 func runtime():
 	# Reset setup
@@ -40,7 +46,7 @@ func runtime():
 	flip_cards(false)
 	yield(self, "step_finished")
 	
-	if score <= 0:
+	if bank <= 0:
 		# TODO: End game
 		pass
 	

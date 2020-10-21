@@ -55,5 +55,6 @@ position = Vector2( 0, -11.6541 )
 
 [node name="NextButton" parent="." instance=ExtResource( 9 )]
 position = Vector2( 68.8651, 46.6164 )
-[connection signal="score_updated" from="." to="Bank" method="_on_Game_score_updated"]
+[connection signal="bank_updated" from="." to="Bank" method="_on_Game_bank_updated"]
+[connection signal="pot_updated" from="." to="Pot" method="_on_Game_pot_updated"]
 [connection signal="input_event" from="NextButton" to="." method="_on_NextButton_input_event"]
