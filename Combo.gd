@@ -75,8 +75,9 @@ func get_combination_code(ids):
 	# Check if straight
 	var straight = false
 	
+	values.sort()
 	var prev_value = null
-	for n in values.sort():
+	for n in values:
 		if prev_value == null or prev_value == n - 1:
 			prev_value = n
 			straight = true
@@ -85,7 +86,7 @@ func get_combination_code(ids):
 			break
 	
 	# Check if flush
-	var flush = colors.count(colors.front())
+	var flush = colors.count(colors.front()) == colors.size()
 	
 	if straight and flush and values.back() == 12:
 		return Combos.ROYAL_FLUSH

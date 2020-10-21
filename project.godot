@@ -22,6 +22,7 @@ config/icon="res://images/icon.png"
 [autoload]
 
 Cursor="*res://Cursor.gd"
+Combo="*res://Combo.gd"
 
 [display]
 
