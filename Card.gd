@@ -48,6 +48,7 @@ func set_identifier(new_id):
 	if Deck.isNumber(id):
 		$Front/Number.visible = true
 		$Front/Number.frame_coords.x = value - 1
+		$Front/Number.frame_coords.y = 0
 		if Deck.isBlackColor(id):
 			$Front/Number.frame_coords.y = 1
 	

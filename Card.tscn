@@ -43,12 +43,10 @@ texture = ExtResource( 8 )
 hframes = 4
 
 [node name="Number" type="Sprite" parent="Front"]
-visible = false
 texture = ExtResource( 3 )
 offset = Vector2( 10, 10 )
 vframes = 2
 hframes = 9
-frame = 8
 
 [node name="HeadRed" type="Sprite" parent="Front"]
 visible = false
