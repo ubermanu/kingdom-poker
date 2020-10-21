@@ -26,7 +26,6 @@ func _on_Token_input_event(_viewport, event, _shape_idx):
 			dragging = true
 		elif event.button_index == BUTTON_LEFT and !event.pressed:
 			if dragging == true:
-				$DropEffect.stop()
 				$DropEffect.play()
 			dragging = false
 
