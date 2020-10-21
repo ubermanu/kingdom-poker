@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Board.tscn" type="PackedScene" id=1]
 [ext_resource path="res://TokenList.tscn" type="PackedScene" id=2]
@@ -6,6 +6,13 @@
 [ext_resource path="res://MusicButton.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Table.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Game.gd" type="Script" id=6]
+
+[sub_resource type="DynamicFontData" id=1]
+font_path = "res://fonts/cloisterblack.ttf"
+
+[sub_resource type="DynamicFont" id=2]
+size = 36
+font_data = SubResource( 1 )
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 6 )
@@ -17,18 +24,32 @@ position = Vector2( 842.576, 405.311 )
 active = false
 
 [node name="Board" parent="." instance=ExtResource( 1 )]
+position = Vector2( 440, 238.724 )
 
 [node name="Bank" parent="." instance=ExtResource( 3 )]
-position = Vector2( 28.645, 29.435 )
+position = Vector2( 781.817, 29.435 )
 
 [node name="TokenList" parent="." instance=ExtResource( 2 )]
+position = Vector2( 0, -11.6541 )
 
 [node name="NextButton" type="Button" parent="."]
-margin_left = 773.796
-margin_top = 14.7194
-margin_right = 835.796
-margin_bottom = 98.7194
+margin_left = 21.4486
+margin_top = 11.3236
+margin_right = 83.4486
+margin_bottom = 95.3236
 text = "NEXT >"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Message" type="RichTextLabel" parent="."]
+margin_left = 173.0
+margin_top = 56.0
+margin_right = 689.0
+margin_bottom = 107.0
+custom_fonts/normal_font = SubResource( 2 )
+text = "Veuillez miser..."
+scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
