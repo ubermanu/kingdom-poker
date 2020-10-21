@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Board.tscn" type="PackedScene" id=1]
 [ext_resource path="res://TokenList.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Game.gd" type="Script" id=6]
 [ext_resource path="res://HelpButton.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Pot.tscn" type="PackedScene" id=8]
+[ext_resource path="res://NextButton.tscn" type="PackedScene" id=9]
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://fonts/cloisterblack.ttf"
@@ -22,26 +23,26 @@ script = ExtResource( 6 )
 [node name="Table" parent="." instance=ExtResource( 5 )]
 
 [node name="MusicButton" parent="." instance=ExtResource( 4 )]
-position = Vector2( 842, 405 )
+position = Vector2( 848, 408 )
 active = false
 
 [node name="HelpButton" parent="." instance=ExtResource( 7 )]
-position = Vector2( 36, 405 )
+position = Vector2( 34, 408 )
 
 [node name="Board" parent="." instance=ExtResource( 1 )]
 position = Vector2( 440, 238.724 )
 
 [node name="Bank" parent="." instance=ExtResource( 3 )]
-position = Vector2( 750, 30.0595 )
+position = Vector2( 753, 32 )
 
 [node name="Pot" parent="." instance=ExtResource( 8 )]
-position = Vector2( 743, 74.0595 )
+position = Vector2( 749.5, 72 )
 
 [node name="Message" type="RichTextLabel" parent="."]
-margin_left = 173.0
-margin_top = 56.0
-margin_right = 689.0
-margin_bottom = 107.0
+margin_left = 218.557
+margin_top = 57.0595
+margin_right = 734.557
+margin_bottom = 108.059
 custom_fonts/normal_font = SubResource( 2 )
 text = "Veuillez miser..."
 scroll_active = false
@@ -52,14 +53,7 @@ __meta__ = {
 [node name="TokenList" parent="." instance=ExtResource( 2 )]
 position = Vector2( 0, -11.6541 )
 
-[node name="NextButton" type="Button" parent="."]
-margin_left = 21.4486
-margin_top = 11.3236
-margin_right = 83.4486
-margin_bottom = 95.3236
-text = "NEXT >"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="NextButton" parent="." instance=ExtResource( 9 )]
+position = Vector2( 68.8651, 46.6164 )
 [connection signal="score_updated" from="." to="Bank" method="_on_Game_score_updated"]
-[connection signal="pressed" from="NextButton" to="." method="_on_NextButton_pressed"]
+[connection signal="input_event" from="NextButton" to="." method="_on_NextButton_input_event"]

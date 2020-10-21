@@ -65,5 +65,7 @@ func shuffle():
 	randomize()
 	cards.shuffle()
 
-func _on_NextButton_pressed():
-	emit_signal("step_finished")
+func _on_NextButton_input_event(_viewport, event, _shape_idx):
+	if event is InputEventMouseButton:
+		if event.button_index == BUTTON_LEFT and event.pressed:
+			emit_signal("step_finished")
