@@ -48,6 +48,7 @@ func runtime():
 	$TokenList/Token2.draggable = true
 	$TokenList/Token3.draggable = true
 	$TokenList/Token4.draggable = true
+	$TokenList/Token5.draggable = true
 	yield(self, "step_finished")
 	
 	# Select cards to swap
