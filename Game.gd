@@ -44,11 +44,6 @@ func runtime():
 	# Show token list
 	$Message.text = "Veuillez miser..."
 	$TokenList.visible = true
-	$TokenList/Token.draggable = true
-	$TokenList/Token2.draggable = true
-	$TokenList/Token3.draggable = true
-	$TokenList/Token4.draggable = true
-	$TokenList/Token5.draggable = true
 	yield(self, "step_finished")
 	
 	# Select cards to swap
@@ -56,11 +51,13 @@ func runtime():
 	$TokenList.visible = false
 	$Board.visible = true
 	flip_cards(false)
+	toggle_select_cards(true)
 	yield(self, "step_finished")
 	
 	# Resolve result code, message and bonus
 	update_card_ids(cards.slice(4, 9))
 	flip_cards(false)
+	toggle_select_cards(false)
 	var result = Combo.get_combination_code(get_card_ids())
 	$Message.text = Combo.Messages[result]
 	bank += pot * Combo.Bonus[result]
@@ -100,6 +97,13 @@ func flip_cards(flipped):
 	$Board/Card3.flipped = flipped
 	$Board/Card4.flipped = flipped
 	$Board/Card5.flipped = flipped
+
+func toggle_select_cards(selectable):
+	$Board/Card.selectable = selectable
+	$Board/Card2.selectable = selectable
+	$Board/Card3.selectable = selectable
+	$Board/Card4.selectable = selectable
+	$Board/Card5.selectable = selectable
 
 func shuffle():
 	randomize()
