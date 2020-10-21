@@ -57,10 +57,11 @@ func runtime():
 	flip_cards(false)
 	yield(self, "step_finished")
 	
-	# Result
-	# TODO: Generate result according to card combos
+	# Resolve result code, message and bonus
 	flip_cards(false)
-	$Message.text = "Perdu, on retente sa chance?"
+	var result = Combo.get_combination_code(get_card_ids())
+	$Message.text = Combo.Messages[result]
+	bank += pot * Combo.Bonus[result]
 	
 	if bank <= 0:
 		# TODO: End game
@@ -68,6 +69,15 @@ func runtime():
 	
 	yield(self, "step_finished")
 	runtime()
+
+func get_card_ids():
+	return [
+		$Board/Card.id,
+		$Board/Card2.id,
+		$Board/Card3.id,
+		$Board/Card4.id,
+		$Board/Card5.id
+	]
 
 func update_cards():
 	var ids = cards.slice(0, 4)
