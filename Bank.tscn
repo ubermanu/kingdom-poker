@@ -14,9 +14,9 @@ font_data = SubResource( 1 )
 script = ExtResource( 2 )
 
 [node name="Score" type="RichTextLabel" parent="."]
-margin_left = 19.5848
+margin_left = 25.0
 margin_top = -16.1271
-margin_right = 115.585
+margin_right = 121.0
 margin_bottom = 24.8729
 custom_fonts/normal_font = SubResource( 2 )
 text = "1000"

@@ -28,8 +28,8 @@ script = ExtResource( 6 )
 [node name="Front" type="Node2D" parent="."]
 
 [node name="Background" type="Sprite" parent="Front"]
-position = Vector2( 0.250002, -0.500003 )
-scale = Vector2( 1.1, 135 )
+position = Vector2( 0.25, 0 )
+scale = Vector2( 1.1, 138 )
 texture = SubResource( 2 )
 
 [node name="Border" type="Sprite" parent="Front"]
