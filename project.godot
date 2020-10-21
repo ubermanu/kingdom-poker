@@ -22,7 +22,6 @@ config/icon="res://images/icon.png"
 [autoload]
 
 Cursor="*res://Cursor.gd"
-Deck="*res://Deck.gd"
 
 [display]
 
