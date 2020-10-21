@@ -34,12 +34,12 @@ func bet(amount):
 func runtime():
 	# Reset setup
 	set_bank(bank)
-	set_pot(pot)
+	set_pot(0)
 	$TokenList.visible = false
 	$Board.visible = false
 	flip_cards(true)
 	shuffle()
-	update_cards()
+	update_card_ids(cards.slice(0, 4))
 	
 	# Show token list
 	$Message.text = "Veuillez miser..."
@@ -58,6 +58,7 @@ func runtime():
 	yield(self, "step_finished")
 	
 	# Resolve result code, message and bonus
+	update_card_ids(cards.slice(4, 9))
 	flip_cards(false)
 	var result = Combo.get_combination_code(get_card_ids())
 	$Message.text = Combo.Messages[result]
@@ -79,13 +80,18 @@ func get_card_ids():
 		$Board/Card5.id
 	]
 
-func update_cards():
-	var ids = cards.slice(0, 4)
-	$Board/Card.id = ids[0]
-	$Board/Card2.id = ids[1]
-	$Board/Card3.id = ids[2]
-	$Board/Card4.id = ids[3]
-	$Board/Card5.id = ids[4]
+# Update selected cards
+func update_card_ids(ids):
+	if $Board/Card.flipped:
+		$Board/Card.id = ids[0]
+	if $Board/Card2.flipped:
+		$Board/Card2.id = ids[1]
+	if $Board/Card3.flipped:
+		$Board/Card3.id = ids[2]
+	if $Board/Card4.flipped:
+		$Board/Card4.id = ids[3]
+	if $Board/Card5.flipped:
+		$Board/Card5.id = ids[4]
 
 func flip_cards(flipped):
 	$Board/Card.flipped = flipped
