@@ -10,6 +10,8 @@ var allowed_values = [
 	1, 5, 10, 20, 100
 ]
 
+signal bet(amount)
+
 func set_value(v):
 	value = v
 	$Sprite.frame = allowed_values.find(v)
@@ -26,6 +28,7 @@ func _on_Token_input_event(_viewport, event, _shape_idx):
 			dragging = true
 		elif event.button_index == BUTTON_LEFT and !event.pressed:
 			if dragging == true:
+				emit_signal("bet", value)
 				$DropEffect.play()
 			dragging = false
 
