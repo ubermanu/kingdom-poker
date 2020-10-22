@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://images/token.png" type="Texture" id=1]
 [ext_resource path="res://Token.gd" type="Script" id=2]
@@ -6,6 +6,21 @@
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 55.8531
+
+[sub_resource type="Animation" id=2]
+resource_name = "Zoom"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.1, 1.1 ) ]
+}
 
 [node name="Token" type="KinematicBody2D"]
 input_pickable = true
@@ -24,6 +39,10 @@ scale = Vector2( 5.55, 5.55 )
 
 [node name="DropEffect" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+playback_speed = 5.0
+anims/Zoom = SubResource( 2 )
 [connection signal="input_event" from="." to="." method="_on_Token_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_Token_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_Token_mouse_exited"]

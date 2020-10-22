@@ -32,10 +32,12 @@ func _on_Token_input_event(_viewport, event, _shape_idx):
 		if event.button_index == BUTTON_LEFT and event.pressed:
 			offset = get_viewport().get_mouse_position() - position
 			dragging = true
+			$AnimationPlayer.play("Zoom")
 		elif event.button_index == BUTTON_LEFT and !event.pressed:
 			if dragging == true:
 				emit_signal("bet", value)
 				$DropEffect.play()
+				$AnimationPlayer.play_backwards("Zoom")
 			dragging = false
 
 func _on_VisibilityNotifier2D_screen_exited():
