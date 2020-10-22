@@ -44,6 +44,7 @@ func set_identifier(new_id):
 # Update the child features of the card
 # according to its current identifer
 func update_features():
+	position.y = 0
 	
 	# If flipped shows the back side of the card
 	# If not, shows the front side
@@ -93,6 +94,10 @@ func _on_Card_input_event(_viewport, event, _shape_idx):
 		if event.button_index == BUTTON_LEFT and event.pressed:
 			$FlipEffect.play()
 			set_flipped(!flipped)
+			if flipped:
+				$AnimationPlayer.play("Select")
+			else:
+				$AnimationPlayer.play_backwards("Select")
 
 # Returns TRUE if the color is black
 func is_black_color():
