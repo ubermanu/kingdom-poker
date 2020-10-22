@@ -50,6 +50,8 @@ func runtime():
 	$Message.text = "Changer certaines cartes?"
 	$TokenList.visible = false
 	$Board.visible = true
+	for token in get_tree().get_nodes_in_group('Temp'):
+		token.queue_free()
 	flip_cards(false)
 	toggle_select_cards(true)
 	yield(self, "step_finished")
