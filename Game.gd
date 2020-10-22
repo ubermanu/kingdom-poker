@@ -12,10 +12,10 @@ func _ready():
 	$Board.visible = false
 	$TokenList.visible = false
 	cards = range(52)
-	$TokenList/Token.connect("bet", self, "bet")
-	$TokenList/Token2.connect("bet", self, "bet")
-	$TokenList/Token3.connect("bet", self, "bet")
-	$TokenList/Token4.connect("bet", self, "bet")
+	$TokenList/Token.connect("bet", self, "_on_Token_bet")
+	$TokenList/Token2.connect("bet", self, "_on_Token_bet")
+	$TokenList/Token3.connect("bet", self, "_on_Token_bet")
+	$TokenList/Token4.connect("bet", self, "_on_Token_bet")
 	runtime()
 
 func set_bank(amount):
@@ -26,7 +26,7 @@ func set_pot(amount):
 	pot = amount
 	emit_signal("pot_updated", pot)
 
-func bet(amount):
+func _on_Token_bet(amount):
 	if amount <= bank:
 		set_bank(bank - amount)
 		set_pot(pot + amount)
