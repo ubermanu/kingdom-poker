@@ -17,6 +17,7 @@ func _ready():
 	$TokenList/Token2.connect("bet", self, "_on_Token_bet")
 	$TokenList/Token3.connect("bet", self, "_on_Token_bet")
 	$TokenList/Token4.connect("bet", self, "_on_Token_bet")
+	$TokenList/Token5.connect("bet", self, "_on_Token_bet")
 	runtime()
 
 func set_bank(amount):
