@@ -63,8 +63,9 @@ func runtime():
 	bank += pot * Combo.Bonus[result]
 	
 	if bank <= 0:
-		# TODO: End game
-		pass
+		$Message.text = "..."
+		yield(self, "step_finished")
+		get_tree().change_scene("res://Menu.tscn")
 	
 	yield(self, "step_finished")
 	runtime()
