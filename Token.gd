@@ -15,6 +15,7 @@ signal bet(amount)
 
 func _ready():
 	get_tree().current_scene.connect("bank_updated", self, "_on_Game_bank_updated")
+	get_tree().current_scene.connect("input", self, "_on_Game_input")
 
 func _on_Game_bank_updated(bank):
 	if generator:
@@ -35,11 +36,6 @@ func _on_Token_input_event(_viewport, event, _shape_idx):
 			offset = get_viewport().get_mouse_position() - position
 			dragging = true
 			$AnimationPlayer.play("Zoom")
-		elif event.button_index == BUTTON_LEFT and !event.pressed:
-			if dragging == true:
-				$DropEffect.play()
-				$AnimationPlayer.play_backwards("Zoom")
-			dragging = false
 	if generator and event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT and event.pressed:
 			var new_token = duplicate()
@@ -51,6 +47,14 @@ func _on_Token_input_event(_viewport, event, _shape_idx):
 			new_token.get_node("AnimationPlayer").play("Zoom")
 			get_tree().root.add_child(new_token)
 			emit_signal("bet", value)
+
+func _on_Game_input(event):
+	if draggable and event is InputEventMouseButton:
+		if event.button_index == BUTTON_LEFT and !event.pressed:
+			if dragging == true:
+				$DropEffect.play()
+				$AnimationPlayer.play_backwards("Zoom")
+			dragging = false
 
 func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()

@@ -7,6 +7,7 @@ var cards = []
 signal step_finished
 signal bank_updated(score)
 signal pot_updated(pot)
+signal input(event)
 
 func _ready():
 	$Board.visible = false
@@ -122,3 +123,6 @@ func _on_NextButton_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT and event.pressed:
 			emit_signal("step_finished")
+
+func _input(event):
+	emit_signal("input", event)
