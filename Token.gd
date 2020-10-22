@@ -12,6 +12,12 @@ var allowed_values = [
 
 signal bet(amount)
 
+func _ready():
+	get_tree().current_scene.connect("bank_updated", self, "_on_Game_bank_updated")
+
+func _on_Game_bank_updated(bank):
+	visible = bank >= value
+
 func set_value(v):
 	value = v
 	$Sprite.frame = allowed_values.find(v)
