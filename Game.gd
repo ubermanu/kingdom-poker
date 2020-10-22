@@ -64,6 +64,12 @@ func runtime():
 	$Message.text = Combo.Messages[result]
 	bank += pot * Combo.Bonus[result]
 	
+	set_bank(bank)
+	set_pot(0)
+	
+	if result >= 1:
+		$Bank/Income.play()
+	
 	if bank <= 0:
 		$Message.text = "..."
 		yield(self, "step_finished")
