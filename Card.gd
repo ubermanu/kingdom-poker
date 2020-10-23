@@ -8,9 +8,9 @@ const Colors = {
 }
 
 const Heads = {
-	JACK = 10,
-	QUEEN = 11,
-	KING = 12,
+	JACK = 9,
+	QUEEN = 10,
+	KING = 11,
 }
 
 # Contains the id of the card
@@ -109,7 +109,7 @@ func is_red_color():
 
 # Returns TRUE if the card is an ace
 func is_ace():
-	return value == 0
+	return value == 12
 
 # Returns TRUE if the card is head
 func is_head():
