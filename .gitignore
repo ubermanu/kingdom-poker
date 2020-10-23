@@ -12,3 +12,6 @@ data_*/
 
 # Media (not ignored by godot)
 media/*.import
+
+# Build
+.build/
