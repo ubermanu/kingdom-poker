@@ -73,7 +73,7 @@ func update_features():
 	# Set number
 	if is_number():
 		$Front/Number.visible = true
-		$Front/Number.frame_coords.x = value - 1
+		$Front/Number.frame_coords.x = value
 		$Front/Number.frame_coords.y = 0
 		if is_black_color():
 			$Front/Number.frame_coords.y = 1
@@ -86,7 +86,7 @@ func update_features():
 		if is_red_color():
 			head = $Front/HeadRed
 		head.visible = true
-		head.frame_coords.y = value - 10
+		head.frame_coords.y = value - 9
 
 # Toggle card if selectable
 func _on_Card_input_event(_viewport, event, _shape_idx):
