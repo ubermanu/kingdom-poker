@@ -42,6 +42,7 @@ func runtime():
 	flip_cards(true)
 	shuffle()
 	update_card_ids(cards.slice(0, 4))
+	update_faces(0)
 	
 	# Show token list
 	$Message.text = "Veuillez miser..."
@@ -72,6 +73,11 @@ func runtime():
 	if result >= 1:
 		$Bank/Income.play()
 	
+	if result == 0:
+		update_faces(2)
+	else:
+		update_faces(1)
+	
 	if bank <= 0:
 		$Message.text = "..."
 		yield(self, "step_finished")
@@ -88,6 +94,19 @@ func get_card_ids():
 		$Board/Card4.id,
 		$Board/Card5.id
 	]
+
+# Update head faces
+func update_faces(frame):
+	$Board/Card/Front/HeadRed.frame_coords.x = frame
+	$Board/Card/Front/HeadBlack.frame_coords.x = frame
+	$Board/Card2/Front/HeadRed.frame_coords.x = frame
+	$Board/Card2/Front/HeadBlack.frame_coords.x = frame
+	$Board/Card3/Front/HeadRed.frame_coords.x = frame
+	$Board/Card3/Front/HeadBlack.frame_coords.x = frame
+	$Board/Card4/Front/HeadRed.frame_coords.x = frame
+	$Board/Card4/Front/HeadBlack.frame_coords.x = frame
+	$Board/Card5/Front/HeadRed.frame_coords.x = frame
+	$Board/Card5/Front/HeadBlack.frame_coords.x = frame
 
 # Update selected cards
 func update_card_ids(ids):
